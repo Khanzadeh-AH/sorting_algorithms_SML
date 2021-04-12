@@ -6,7 +6,7 @@ fun bubble([]) = []
 
 
 
-fun find_last_element([a]) = a
+fun find_last_element([a]) = [a]
 |   find_last_element(h::rest) = find_last_element(rest);
 
 
@@ -15,21 +15,23 @@ fun list_without_last_element([]) = []
 |   list_without_last_element(h::rest) = if rest = [] then [h]
                                         else h::list_without_last_element(rest);
 
+fun append([],z) = z
+| append(a::x,z) = a::append(x,z);
 
 (* sorts in dec order *)
 
-fun bubblesort([]) = []
-|   bubblesort([a]) = [a]
-|   bubblesort(L) = 
+fun bubblesort [] = []
+|   bubblesort [a] = [a]
+|   bubblesort L = 
         let
             val last_element = find_last_element(bubble(L));
             val remaining = list_without_last_element(bubble(L))
         in
-            last_element::bubblesort(remaining)
+            bubblesort(remaining)@last_element
         end;
 
 
 
 
 
-rev(bubblesort([192, 168, 172, 255, 0, 1, 45, 22]));
+bubblesort([192, 168, 172, 255, 0, 1, 45, 22]);
